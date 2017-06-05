@@ -13,3 +13,8 @@
 // limitations under the License.
 
 #include "D3D12Backend.h"
+#include "CommandBufferD3D12.h"
+#include "PipelineD3D12.h"
+#include "PipelineLayoutD3D12.h"
+#include "QueueD3D12.h"
+#include "ShaderModuleD3D12.h"
