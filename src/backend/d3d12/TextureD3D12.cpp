@@ -100,6 +100,20 @@ namespace d3d12 {
         device->GetResourceAllocator()->Release(resource);
     }
 
+    DXGI_FORMAT Texture::GetD3D12Format() const {
+        return D3D12TextureFormat(GetFormat());
+    }
+
+    uint32_t Texture::GetRowPitch() const {
+        uint32_t texelSize = 0;
+        switch (GetFormat()) {
+            case nxt::TextureFormat::R8G8B8A8Unorm:
+                texelSize = 4;
+        }
+        uint32_t rowSize = GetWidth() * texelSize;
+        return ((rowSize + (D3D12_TEXTURE_DATA_PITCH_ALIGNMENT - 1)) / D3D12_TEXTURE_DATA_PITCH_ALIGNMENT) * D3D12_TEXTURE_DATA_PITCH_ALIGNMENT;
+    }
+
     ComPtr<ID3D12Resource> Texture::GetD3D12Resource() {
         return resource;
     }
