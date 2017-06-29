@@ -16,6 +16,7 @@
 
 #include "BufferD3D12.h"
 #include "CommandBufferD3D12.h"
+#include "DepthStencilStateD3D12.h"
 #include "InputStateD3D12.h"
 #include "PipelineD3D12.h"
 #include "PipelineLayoutD3D12.h"
@@ -253,12 +254,6 @@ namespace d3d12 {
 
     BufferView::BufferView(Device* device, BufferViewBuilder* builder)
         : BufferViewBase(builder), device(device) {
-    }
-
-    // DepthStencilState
-
-    DepthStencilState::DepthStencilState(Device* device, DepthStencilStateBuilder* builder)
-        : DepthStencilStateBase(builder), device(device) {
     }
 
     // Framebuffer

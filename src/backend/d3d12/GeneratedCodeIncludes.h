@@ -15,6 +15,7 @@
 #include "D3D12Backend.h"
 #include "BufferD3D12.h"
 #include "CommandBufferD3D12.h"
+#include "DepthStencilStateD3D12.h"
 #include "InputStateD3D12.h"
 #include "PipelineD3D12.h"
 #include "PipelineLayoutD3D12.h"

@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef BACKEND_D3D12_INPUTSTATED3D12_H_
-#define BACKEND_D3D12_INPUTSTATED3D12_H_
+#ifndef BACKEND_D3D12_DEPTHSTENCILSTATED3D12_H_
+#define BACKEND_D3D12_DEPTHSTENCILSTATED3D12_H_
 
-#include "common/InputState.h"
+#include "common/DepthStencilState.h"
 
 #include "d3d12_platform.h"
 
@@ -24,18 +24,17 @@ namespace d3d12 {
 
     class Device;
 
-    class InputState : public InputStateBase {
+    class DepthStencilState : public DepthStencilStateBase {
         public:
-            InputState(Device* device, InputStateBuilder* builder);
+            DepthStencilState(Device* device, DepthStencilStateBuilder* builder);
 
-            const D3D12_INPUT_LAYOUT_DESC& GetD3D12InputLayoutDescriptor() const;
+            const D3D12_DEPTH_STENCIL_DESC& GetD3D12DepthStencilDescriptor() const;
 
         private:
-            D3D12_INPUT_LAYOUT_DESC inputLayoutDescriptor;
-            D3D12_INPUT_ELEMENT_DESC inputElementDescriptors[kMaxVertexAttributes];
+            D3D12_DEPTH_STENCIL_DESC depthStencilDesc;
     };
 
 }
 }
 
-#endif // BACKEND_D3D12_INPUTSTATED3D12_H_
+#endif // BACKEND_D3D12_DEPTHSTENCILSTATED3D12_H_

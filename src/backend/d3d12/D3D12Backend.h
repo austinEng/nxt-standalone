@@ -185,14 +185,6 @@ namespace d3d12 {
             Device* device;
     };
 
-    class DepthStencilState : public DepthStencilStateBase {
-        public:
-            DepthStencilState(Device* device, DepthStencilStateBuilder* builder);
-
-        private:
-            Device* device;
-    };
-
     class RenderPass : public RenderPassBase {
         public:
             RenderPass(Device* device, RenderPassBuilder* builder);

@@ -15,6 +15,7 @@
 #include "PipelineD3D12.h"
 
 #include "D3D12Backend.h"
+#include "DepthStencilStateD3D12.h"
 #include "InputStateD3D12.h"
 #include "ShaderModuleD3D12.h"
 #include "PipelineLayoutD3D12.h"
@@ -146,8 +147,8 @@ namespace d3d12 {
             descriptor.BlendState.RenderTarget[0].LogicOp = D3D12_LOGIC_OP_NOOP;
             descriptor.BlendState.RenderTarget[0].RenderTargetWriteMask = D3D12_COLOR_WRITE_ENABLE_ALL;
 
-            descriptor.DepthStencilState.DepthEnable = false;
-            descriptor.DepthStencilState.StencilEnable = false;
+            descriptor.DepthStencilState = ToBackend(GetDepthStencilState())->GetD3D12DepthStencilDescriptor();
+
             descriptor.SampleMask = UINT_MAX;
             descriptor.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
             descriptor.NumRenderTargets = 1;

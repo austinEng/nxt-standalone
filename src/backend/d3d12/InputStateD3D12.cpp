@@ -38,7 +38,7 @@ namespace d3d12 {
     }
 
     InputState::InputState(Device* device, InputStateBuilder* builder)
-        : InputStateBase(builder), device(device) {
+        : InputStateBase(builder) {
 
         const auto& attributesSetMask = GetAttributesSetMask();
 
