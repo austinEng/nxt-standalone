@@ -32,4 +32,4 @@ TEST_P(BasicTests, BufferSetSubData) {
     EXPECT_BUFFER_U32_EQ(value, buffer, 0);
 }
 
-NXT_INSTANTIATE_TEST(BasicTests, MetalBackend)
+NXT_INSTANTIATE_TEST(BasicTests, MetalBackend, D3D12Backend)
