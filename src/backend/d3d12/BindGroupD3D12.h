@@ -30,7 +30,14 @@ namespace d3d12 {
         public:
             BindGroup(Device* device, BindGroupBuilder* builder);
 
+            //* Record descriptors of this BindGroup's BindGroupLayout into the provided descriptor heap and offsets.
+            //* These offsets are remembered in BindGroup::cbvUavSrvHeapOffset and BindGroup::samplerHeapOffset so that
+            //* handle to the recorded descriptors can be retrieved later.
+            //* The input offsets are incremented by the number of descriptors written.
+            //* The BindGroup also keeps track of the heapSerial which serves as an id of the descriptor heap
+            //* that it last wrote to. A BindGroup may be used multiple times but it only needs to be recorded in a heap once
             void RecordDescriptors(const DescriptorHeapHandle &cbvSrvUavHeapStart, uint32_t* cbvUavSrvHeapOffset, const DescriptorHeapHandle &samplerHeapStart, uint32_t* samplerHeapOffset, uint64_t serial);
+
             uint32_t GetCbvUavSrvHeapOffset() const;
             uint32_t GetSamplerHeapOffset() const;
             uint64_t GetHeapSerial() const;

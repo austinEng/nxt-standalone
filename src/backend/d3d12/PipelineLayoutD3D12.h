@@ -24,6 +24,10 @@ namespace d3d12 {
 
     class Device;
 
+    //* This class is responsible for storing the D3D12 root signature which it populates from BindGroupLayouts and (TODO push constants)
+    //* Each BindGroupLayout is analogous to a DescriptorTable in D3D12. It stores the root parameter index of these descriptor tables 
+    //* so that they can be set on ID3D12CommandList when the command buffer is populated.
+
     class PipelineLayout : public PipelineLayoutBase {
         public:
             PipelineLayout(Device* device, PipelineLayoutBuilder* builder);

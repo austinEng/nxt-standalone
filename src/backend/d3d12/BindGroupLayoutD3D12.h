@@ -24,6 +24,14 @@ namespace d3d12 {
 
     class Device;
 
+    //* Each bind group layout maps to one or two D3D12 descriptor tables (Two because in D3D12, samplers must be in a separate table).
+    //* This class is responsible for creating and caching the ranges that will be used to populate the descriptor tables in d3d12::PipelineLayout.
+    //* These ranges will be copied in d3d12::PipelineLayout because the base register needs to be offset by kMaxBindingsPerGroup.
+    //* (This is because SPIRV-Cross uses the binding index as the register index. We renumber these so that register = bindingIndex + bindingSet * kMaxBindingsPerGroup)
+    //* Because we want to minimize the size of the root signature, the descriptors will be packed so there is one range for CBV descriptors,
+    //* one range for UAV descriptors, one range for SRV descriptors, and one range for Sampler descriptors.
+    //* When we record descriptors into a descriptor heap, we need to know their offsets into the descriptor table. These offsets are stored in BindGroupLayout::bindingOffsets
+
     class BindGroupLayout : public BindGroupLayoutBase {
         public:
             BindGroupLayout(Device* device, BindGroupLayoutBuilder* builder);

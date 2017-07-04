@@ -92,6 +92,10 @@ namespace d3d12 {
     }
 
     DescriptorHeapHandle DescriptorHeapAllocator::AllocateCPUHeap(D3D12_DESCRIPTOR_HEAP_TYPE type, uint32_t count) {
+        //* TODO(enga@google.com): This always allocates a CPU heap of exactly the size that is requested.
+        //* This should be much larger. However, due to the current ineffecient linear allocation that does not
+        //* recycle freed heap ranges, a large allocation would require a large amount of memory to be allocated
+        //* every few seconds creating noticable hangs
         return Allocate(type, count, count, &cpuDescriptorHeapInfos[type], D3D12_DESCRIPTOR_HEAP_FLAG_NONE);
     }
 
