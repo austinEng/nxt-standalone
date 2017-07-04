@@ -39,8 +39,6 @@ namespace d3d12 {
             Device* device;
             uint32_t cbvUavSrvHeapOffset;
             uint32_t samplerHeapOffset;
-            uint32_t cbvUavSrvCount = 0;
-            uint32_t samplerCount = 0;
             uint64_t heapSerial = 0;
     };
 
