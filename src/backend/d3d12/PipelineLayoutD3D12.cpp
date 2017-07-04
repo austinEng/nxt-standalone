@@ -27,14 +27,6 @@ namespace d3d12 {
 
         D3D12_ROOT_PARAMETER rootParameters[kMaxBindGroups * 2];
 
-        // A root parameter is one of these types
-        union {
-            D3D12_ROOT_DESCRIPTOR_TABLE DescriptorTable;
-            D3D12_ROOT_CONSTANTS Constants;
-            D3D12_ROOT_DESCRIPTOR Descriptor;
-        } rootParameterValues[kMaxBindGroups * 2];
-        // samplers must be in a separate descriptor table so we need at most twice as many tables as bind groups
-
         // Ranges are D3D12_DESCRIPTOR_RANGE_TYPE_(SRV|UAV|CBV|SAMPLER)
         // They are grouped together so each bind group has at most 4 ranges
         D3D12_DESCRIPTOR_RANGE ranges[kMaxBindGroups * 4];
@@ -53,9 +45,8 @@ namespace d3d12 {
                 }
 
                 auto& rootParameter = rootParameters[parameterIndex];
-                rootParameter.ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;
-                rootParameter.DescriptorTable = rootParameterValues[parameterIndex].DescriptorTable;
                 rootParameter.ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;
+                rootParameter.ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;
                 rootParameter.DescriptorTable.NumDescriptorRanges = rangeCount;
                 rootParameter.DescriptorTable.pDescriptorRanges = &ranges[rangeIndex];
 
