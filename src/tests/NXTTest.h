@@ -22,6 +22,9 @@
 #define EXPECT_BUFFER_U32_EQ(expected, buffer, offset) \
     AddBufferExpectation(__FILE__, __LINE__, buffer, offset, sizeof(uint32_t), new detail::ExpectEq<uint32_t>(expected));
 
+#define EXPECT_BUFFER_U32_RANGE_EQ(expected, buffer, offset, count) \
+    AddBufferExpectation(__FILE__, __LINE__, buffer, offset, sizeof(uint32_t) * count, new detail::ExpectEq<uint32_t>(expected, count));
+
 // Backend types used in the NXT_INSTANTIATE_TEST
 enum BackendType {
     D3D12Backend,
@@ -118,6 +121,7 @@ namespace detail {
     class ExpectEq : public Expectation {
         public:
             ExpectEq(T singleValue);
+            ExpectEq(const T* values, const unsigned int count);
 
             testing::AssertionResult Check(const void* data, size_t size) override;
 
