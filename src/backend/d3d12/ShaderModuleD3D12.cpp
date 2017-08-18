@@ -40,7 +40,7 @@ namespace d3d12 {
                 auto bindGroupIndex = compiler.get_decoration(resource.id, spv::DecorationDescriptorSet);
                 auto& baseRegister = baseRegisters[bindGroupIndex];
                 auto bindGroupOffset = bindGroupIndex * kMaxBindingsPerGroup;
-                compiler.set_decoration(resource.id, spv::DecorationBinding, bindGroupOffset + baseRegister++);
+                compiler.set_decoration(resource.id, spv::DecorationBinding, kMaxPushConstants + bindGroupOffset + baseRegister++);
             }
         };
 

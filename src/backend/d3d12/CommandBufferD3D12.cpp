@@ -516,7 +516,13 @@ namespace d3d12 {
 
                 case Command::SetPushConstants:
                     {
-                        commands.NextCommand<SetPushConstantsCmd>();
+                        SetPushConstantsCmd* cmd = commands.NextCommand<SetPushConstantsCmd>();
+                        uint32_t* values = commands.NextData<uint32_t>(cmd->count);
+                        if (bindingTracker.inCompute) {
+                            commandList->SetComputeRoot32BitConstants(0, cmd->count, values, cmd->offset);
+                        } else {
+                            commandList->SetGraphicsRoot32BitConstants(0, cmd->count, values, cmd->offset);
+                        }
                     }
                     break;
 

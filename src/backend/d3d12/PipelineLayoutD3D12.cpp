@@ -33,7 +33,7 @@ namespace d3d12 {
             D3D12_ROOT_DESCRIPTOR_TABLE DescriptorTable;
             D3D12_ROOT_CONSTANTS Constants;
             D3D12_ROOT_DESCRIPTOR Descriptor;
-        } rootParameterValues[kMaxBindGroups * 2];
+        } rootParameterValues[kMaxBindGroups * 2 + 1];
         // samplers must be in a separate descriptor table so we need at most twice as many tables as bind groups
 
         // Ranges are D3D12_DESCRIPTOR_RANGE_TYPE_(SRV|UAV|CBV|SAMPLER)
@@ -42,6 +42,17 @@ namespace d3d12 {
 
         uint32_t parameterIndex = 0;
         uint32_t rangeIndex = 0;
+
+        {
+            auto& rootParameter = rootParameters[parameterIndex];
+            rootParameter.ParameterType = D3D12_ROOT_PARAMETER_TYPE_32BIT_CONSTANTS;
+            rootParameter.ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;
+            rootParameter.Constants.Num32BitValues = kMaxPushConstants;
+            rootParameter.Constants.RegisterSpace = 0;
+            rootParameter.Constants.ShaderRegister = 0;
+
+            parameterIndex++;
+        }
 
         for (uint32_t group = 0; group < kMaxBindGroups; ++group) {
             const BindGroupLayout* bindGroupLayout = ToBackend(GetBindGroupLayout(group));
@@ -55,14 +66,14 @@ namespace d3d12 {
 
                 auto& rootParameter = rootParameters[parameterIndex];
                 rootParameter.ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;
-                rootParameter.DescriptorTable = rootParameterValues[parameterIndex].DescriptorTable;
                 rootParameter.ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;
+                rootParameter.DescriptorTable = rootParameterValues[parameterIndex].DescriptorTable;
                 rootParameter.DescriptorTable.NumDescriptorRanges = rangeCount;
                 rootParameter.DescriptorTable.pDescriptorRanges = &ranges[rangeIndex];
 
                 for (uint32_t i = 0; i < rangeCount; ++i) {
                     ranges[rangeIndex] = descriptorRanges[i];
-                    ranges[rangeIndex].BaseShaderRegister = group * kMaxBindingsPerGroup;
+                    ranges[rangeIndex].BaseShaderRegister = group * kMaxBindingsPerGroup + kMaxPushConstants;
                     rangeIndex++;
                 }
 
